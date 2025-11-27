@@ -1,0 +1,15 @@
+[Wed Nov 26 10:29:28 2025] PHP 8.4.2 Development Server (http://127.0.0.1:8080) started
+[Wed Nov 26 10:29:49 2025] 127.0.0.1:41416 Accepted
+[Wed Nov 26 10:29:49 2025] 127.0.0.1:41416 Closing
+[Wed Nov 26 10:29:49 2025] 127.0.0.1:41428 Accepted
+[Wed Nov 26 10:29:50 2025] 127.0.0.1:41428 [404]: GET /favicon.ico - No such file or directory
+[Wed Nov 26 10:29:50 2025] 127.0.0.1:41428 Closing
+[Wed Nov 26 10:29:53 2025] 127.0.0.1:41432 Accepted
+[Wed Nov 26 10:29:53 2025] 127.0.0.1:41432 [200]: POST /catch_image.php
+[Wed Nov 26 10:29:53 2025] 127.0.0.1:41432 Closing
+[Wed Nov 26 10:29:55 2025] 127.0.0.1:50456 Accepted
+[Wed Nov 26 10:29:55 2025] 127.0.0.1:50456 [200]: POST /catch_image.php
+[Wed Nov 26 10:29:55 2025] 127.0.0.1:50456 Closing
+[Wed Nov 26 10:29:57 2025] 127.0.0.1:50472 Accepted
+[Wed Nov 26 10:29:57 2025] 127.0.0.1:50472 [200]: POST /catch_image.php
+[Wed Nov 26 10:29:57 2025] 127.0.0.1:50472 Closing
